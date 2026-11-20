@@ -11,3 +11,6 @@ build/
 .DS_Store
 .data/
 contracts/artifacts/
+
+.vercel
+.env*
