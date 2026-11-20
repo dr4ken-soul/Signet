@@ -2,7 +2,7 @@
 
 **Working name:** Signet. Name/domain/trademark clearance has not been completed.
 
-**Project status:** Documentation and design approved; code has not been authorized or created.
+**Project status:** Implemented Aevum testnet demo. Tests, typecheck, and production build pass.
 
 **Prepared:** 15 November 2026
 
@@ -33,7 +33,7 @@ Signet is an AI-assisted control flow for signed supplier invoices. A bounded ag
 | [CLAUDE.md](CLAUDE.md) | Persistent project instructions for an implementation agent |
 | [BUILD_GUIDE.md](BUILD_GUIDE.md) | Four-week testnet build and hackathon delivery plan |
 
-`DOCS.md` is intentionally deferred until a mainnet phase. Code files, database migrations, route files, package manifests, and `.env.example` are also deferred until the user explicitly approves code work.
+`DOCS.md` is intentionally deferred until a mainnet phase.
 
 ## Challenge context
 
@@ -41,6 +41,31 @@ The project is scoped to the QDay Aevum Builder Challenge #1. The challenge page
 
 The documented Aevum testnet configuration is chain ID `44005` (`0xABE5`), RPC `https://rpc-test.qday.info`, and explorer `https://explorer-test.qday.info/`. The tUSD8 contract address is not recorded here because it was not confirmed in the reviewed official material. Do not invent an address. QDay marks x402, paymasters, smart accounts, agent wallets, and some SDKs as coming soon, so Signet must not depend on them for the MVP.
 
+## Quick start
+
+```bash
+npm install
+cp .env.example .env
+npm test
+npm run lint
+npm run build
+npm run dev
+```
+
+The four `NEXT_PUBLIC_*` chain values have public testnet defaults. Add a WalletConnect project ID only if you need a connector beyond the injected browser wallet. `DEPLOYER_PRIVATE_KEY` and `MODEL_API_KEY` are local-only secrets; keep them out of source control and hosted builds.
+
+## Credential guide
+
+Signet runs on the Aevum EVM testnet with synthetic invoices only. No real funds are used.
+
+1. Add the network to your browser wallet: chain ID `44005` (`0xABE5`), RPC `https://rpc-test.qday.info`, currency symbol `tQDAY`, and explorer `https://explorer-test.qday.info/`.
+2. Claim testnet gas at the [QDay faucet](https://faucet.qday.info/en). Faucet tokens are for testing and have no monetary value.
+3. For tUSD8, follow the [QDay build information](https://qday.io/build) and the [QDay token reference](https://wiki.qday.info/Knowledge/reference/tokens). The configured testnet token is `0x456569838f1d43009A91ebA4263147Afd7233483` with 6 decimals.
+4. Inspect transactions, the deployed anchor contract, and emitted events in the [Aevum testnet explorer](https://explorer-test.qday.info/). Use the address from `NEXT_PUBLIC_ANCHOR_CONTRACT_ADDRESS` after deployment.
+5. Check challenge requirements and deadlines on the [DoraHacks challenge detail](https://dorahacks.io/hackathon/qday/detail) and [announcements](https://dorahacks.io/hackathon/qday/announcements).
+
+Never share a private key or seed phrase. The demo uses generated in-memory signing keys for synthetic invoices; do not reuse them for real documents.
+
 ## Build status
 
-This repository currently contains documentation only. The next code step requires explicit user approval. Before code, confirm the current Aevum RPC, tUSD8 address and faucet, ML-DSA verifier library and parameter set, invoice signing envelope, and the privacy mode for on-chain commitments.
+Implemented and verified: 40 tests pass, `npm run lint` (typecheck) is clean, and `npm run build` succeeds. ML-DSA verification runs off-chain. Aevum stores only a document digest and a verification-record hash.
