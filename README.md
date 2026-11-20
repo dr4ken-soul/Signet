@@ -4,6 +4,8 @@
 
 **Project status:** Implemented Aevum testnet demo. Tests, typecheck, and production build pass.
 
+**Live demo:** https://signet-pink.vercel.app
+
 **Prepared:** 15 November 2026
 
 Signet is an AI-assisted control flow for signed supplier invoices. A bounded agent coordinates document intake, field extraction, payee and amount checks, and off-chain ML-DSA signature verification. A buyer reviews and explicitly approves payment. Aevum records a document digest and verification-record hash alongside the tUSD8 payment. The EVM is not claimed to verify ML-DSA.
